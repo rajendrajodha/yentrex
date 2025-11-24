@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkyentrex=self.webpackChunkyentrex||[]).push([[2853],{2853:(e,i,n)=>{n.d(i,{defineChain:()=>r.x,extractChain:()=>t});var r=n(9954);function t(e){let{chains:i,id:n}=e;return i.find((e=>e.id===n))}},9954:(e,i,n)=>{n.d(i,{x:()=>t});var r=n(8);function t(e){return(0,r.A)({formatters:void 0,fees:void 0,serializers:void 0},e)}}}]);
+//# sourceMappingURL=2853.556a7ad5.chunk.js.map
