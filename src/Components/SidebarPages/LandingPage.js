@@ -103,8 +103,9 @@ const LandingPage = () => {
                                 <div class="crp-inv-col">
                                     <div class="crp-inv-col-row">
                                         <div class="crp-inv-col-cont">
-                                            <h4> // Auto-Staking </h4>
-                                            <p> Auto Staking lets users earn passive rewards automatically without any manual steps. Your tokens compound in the background, helping you grow your holdings effortlessly. </p>
+                                            <h4> // Staggered Release </h4>
+                                            <p> Each phase gradually introduces Y Coins, preventing market flooding and encouraging sustained
+                                                growth. </p>
                                         </div>
                                     </div>
                                     <img src="assets/img/ocf_img_1.svg" class="img-fluid" alt="" />
@@ -115,8 +116,9 @@ const LandingPage = () => {
                                 <div class="crp-inv-col">
                                     <div class="crp-inv-col-row">
                                         <div class="crp-inv-col-cont">
-                                            <h4> // API Integrations for Developers </h4>
-                                            <p> Our APIs give developers secure, real-time access to market data and trading functions. Build bots, tools, or custom apps with ease and high performance.</p>
+                                            <h4> // Stake-Driven Incentives </h4>
+                                            <p> Early participants can stake purchased tokens to earn additional Y Coins, aligning long-term
+                                                investment incentives.</p>
                                         </div>
                                     </div>
                                     <img src="assets/img/ocf_img_2.svg" class="img-fluid" alt="" />
@@ -128,8 +130,10 @@ const LandingPage = () => {
                                 <div class="crp-inv-col">
                                     <div class="crp-inv-col-row">
                                         <div class="crp-inv-col-cont">
-                                            <h4> // Burn Mechanism </h4>
-                                            <p>The burn mechanism reduces token supply over time, increasing scarcity and supporting long-term value. It maintains a healthy and transparent token economy.</p>
+                                            <h4> // Scarcity & Value </h4>
+                                            <p>Limited initial availability ensures that Y Coin remains valuable, supporting higher trading
+                                                interest and adoption.
+                                                .</p>
                                         </div>
                                     </div>
                                     <img src="assets/img/ocf_img_3.svg" class="img-fluid" alt="" />
@@ -140,8 +144,8 @@ const LandingPage = () => {
                                 <div class="crp-inv-col">
                                     <div class="crp-inv-col-row">
                                         <div class="crp-inv-col-cont">
-                                            <h4> // Fund Insurance</h4>
-                                            <p>Fund Insurance protects user assets from unforeseen risks, offering added security and confidence. It ensures safer trading and strengthens platform trust.</p>
+                                            <h4> // Strategic Investor Benefits</h4>
+                                            <p>Early access and staking rewards prioritize long-term supporters, reducing sell-off risk postlisting.</p>
                                         </div>
                                     </div>
                                     <img src="assets/img/ocf_img_4.svg" class="img-fluid" alt="" />
@@ -150,6 +154,65 @@ const LandingPage = () => {
                         </div>
                     </div>
                 </section>
+
+                {/* y-coins token sale section */}
+                <div class="token-sale-section my-5 py-5">
+
+                    {/* <!-- Heading --> */}
+                    <h2 class="fw-bold mb-3 text-center">Y-COIN TOKEN SALE STRUCTURE</h2>
+
+                    {/* <!-- Paragraph --> */}
+                    <p class="mb-4 text-center">
+                        Y Coin’s token sale is designed to balance early investor access, strategic
+                        staking incentives, and gradual market introduction.<br/> Only a limited portion of
+                        the total lifetime supply is available during the sale, creating scarcity while
+                        rewarding long-term holders.
+                    </p>
+
+                    {/* <!-- Table --> */}
+                    <div class="table-responsive">
+                        <table class="table table-bordered token-sale-table">
+                            <thead>
+                                <tr>
+                                    <th>Round</th>
+                                    <th>Duration</th>
+                                    <th>Supply (% of Lifetime)</th>
+                                    <th>Price (USD)</th>
+                                    <th>Stake Lock-In</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Phase 1 – Early Access</td>
+                                    <td>30 Days</td>
+                                    <td>5%</td>
+                                    <td>$5</td>
+                                    <td>10 Months</td>
+                                    <td>Strategic investing; staking blocks applied</td>
+                                </tr>
+                                <tr>
+                                    <td>Phase 2 – Main Sale</td>
+                                    <td>60 Days</td>
+                                    <td>10%</td>
+                                    <td>$7</td>
+                                    <td>6 Months</td>
+                                    <td>Public round; pre-registration required; staking blocks applied</td>
+                                </tr>
+                                <tr>
+                                    <td>Phase 3 – Final Round</td>
+                                    <td>30 Days</td>
+                                    <td>10%</td>
+                                    <td>$10</td>
+                                    <td>No Lock-In</td>
+                                    <td>Final round before exchange listing; focused on trading volume</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
 
                 {/* <!-- TOKEN DETAILS Sec --> */}
                 <div id="tokonomics" class="tkm_details bg-white">
@@ -199,10 +262,51 @@ const LandingPage = () => {
                         </div>
                         <div class="row pb-50 mb-pb-20">
                             <div class="col-12 token-title text-center">
-                                <h3>  Token allocation & funds distribution </h3>
+                                <h3> Tokenomics and Scarcity Model</h3>
                             </div>
                         </div>
-                        <div class="chart-container d-flex flex-wrap pb-110 mb-pb-60 mb-pt-20">
+                        <div class="row g-4 mt-4 mx-auto justify-content-center">
+
+                            {/* <!-- Card 1 --> */}
+                            <div class="col-md-4">
+                                <div class="allocation-card p-3 shadow-sm">
+                                    <div class="sale-item">
+                                        <div class="sale-item-color">
+                                            <span></span>
+                                        </div>
+                                        <div class="sale-item-cont">
+                                            <strong>30%</strong>
+                                            <small>Public Sale & Prelaunch</small>
+                                            <small>Immediate availability
+                                                for early investors.
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* <!-- Card 2 --> */}
+                            <div class="col-md-4">
+                                <div class="allocation-card p-3 shadow-sm">
+                                    <div class="sale-item">
+                                        <div class="sale-item-color color-green">
+                                            <span></span>
+                                        </div>
+                                        <div class="sale-item-cont">
+                                            <strong>70%</strong>
+                                            <small>Staking Rewards</small>
+                                            <small>Gradual release via
+                                                YENTREX staking
+                                                protocols.
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {/* <div class="chart-container d-flex flex-wrap pb-110 mb-pb-60 mb-pt-20">
                             <div class="chart-col" >
                                 <div
                                     class="chart-token d-flex flex-wrap align-items-center justify-content-sm-center justify-content-lg-start mb-50">
@@ -217,7 +321,7 @@ const LandingPage = () => {
                                                     <span></span>
                                                 </div>
                                                 <div class="sale-item-cont">
-                                                    <strong>10%</strong>
+                                                    <strong>0%</strong>
                                                     <small>Top Cummunity</small>
                                                 </div>
                                             </div>
@@ -323,10 +427,9 @@ const LandingPage = () => {
                                 </div>
                                 <h3 class="text-end">Sale Contribution</h3>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
-
 
 
                 {/* <!-- WHAT MAKES US DIFFERENT sc --> */}
@@ -335,8 +438,8 @@ const LandingPage = () => {
                         <div class="row ">
                             <div class="col-12 col-md-12 col-lg-8 mb-pb-0">
                                 <div class="crp-inventment-content  " >
-                                    <h2> WHAT MAKES US <br />
-                                        <sapn class="text-gradient border-bottom"> DIFFERENT </sapn>
+                                    <h2> ECOSYSTEM <br />
+                                        <sapn class="text-gradient border-bottom">UTILITIES</sapn>
                                     </h2>
                                 </div>
                             </div>
@@ -350,10 +453,16 @@ const LandingPage = () => {
                                         <img src="assets/img/wmd_1.svg" alt="" width="118" height="120" />
                                     </div>
                                     <div class="service-cont">
-                                        <h3>Advantages</h3>
-                                        <p>Our platform offers top-notch security, a smooth user experience, and advanced crypto features. Every element is designed to maximize user value and growth.
+                                        <h3>Marketplace Vision</h3>
+                                        <p>Y-Coin aims to be more than a trading                                          token — it will fuel a dedicated YENTREX
+                                            E-Commerce Marketplace.
                                         </p>
-
+                                        <ul>
+                                            <li className='text-start'>Accept Y-Coin at fair market value for
+                                                product purchases.</li>
+                                            <li className='text-start'>Offer clothing, electronics, and
+                                                lifestyle goods from multiple brands.</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -364,9 +473,22 @@ const LandingPage = () => {
                                         <img src="assets/img/wmd_2.svg" alt="" width="118" height="120" />
                                     </div>
                                     <div class="service-cont">
-                                        <h3> Edge </h3>
-                                        <p>We provide faster transactions, deeper liquidity, and intuitive tools. Users enjoy lower fees, stronger protection, and a smoother trading experience.
+                                        <h3> Billing System</h3>
+                                        <p>Y-Coin will be usable in partnered
+                                            retail stores across select regions.
+                                            These stores will accept Y-Coin as
+                                            final payment for goods.
                                         </p>
+                                        <ul>
+                                            <li className='text-start'>YENTREX
+                                                will provide prepaid liquidity to
+                                                participating stores, ensuring
+                                                smooth acceptance.</li>
+                                            <li className='text-start'>Stores may also
+                                                earn yield on YCN holdings under the
+                                                Secure Holdings Program.
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -378,9 +500,17 @@ const LandingPage = () => {
                                         <img src="assets/img/wmd_3.svg" alt="" width="118" height="120" />
                                     </div>
                                     <div class="service-cont">
-                                        <h3> Innovation </h3>
-                                        <p>We integrate cutting-edge blockchain solutions and evolving features like automation and smart security, keeping users ahead in the crypto world.
+                                        <h3> Hybrid Trade Terminals </h3>
+                                        <p>Y-Coin is designed for use in future Hybrid
+                                            Trade Terminals that integrate both crypto and
+                                            forex markets.
                                         </p>
+                                        <ul >
+                                            <li className='text-start'>Seamlessly switch between crypto and fiat
+                                                markets.</li>
+                                            <li className='text-start'>Use Y-Coin as a universal settlement asset
+                                                across terminal trades.</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -542,7 +672,6 @@ const LandingPage = () => {
                         </div>
                     </div>
                 </div>
-
 
                 <footer class="footer-container">
                     <div class="container">

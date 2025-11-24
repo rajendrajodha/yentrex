@@ -699,6 +699,118 @@ header style
 	font-weight: 500;
 }
 
+
+
+.token-sale-section p {
+	font-size: 16px;
+	color: #fff;
+	/* max-width: 800px; */
+}
+
+.table-responsive {
+	margin: 40px auto;
+}
+
+.token-sale-table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	margin: 0 auto;
+	max-width: 1100px;
+	text-align: center;
+	overflow: hidden;
+	border-radius: 12px;
+	background: rgba(255, 255, 255, 0.05);
+	backdrop-filter: blur(6px);
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styling */
+.token-sale-table th {
+	background: linear-gradient(135deg, #10141c, #1b2230);
+	color: #fff;
+	font-weight: 700;
+	padding: 18px;
+	letter-spacing: 0.5px;
+	font-size: 16px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Row Styling */
+.token-sale-table td {
+	color: #e1e1e1;
+	padding: 16px;
+	font-size: 18px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Hover Effect */
+.token-sale-table tbody tr:hover {
+	background: rgba(255, 255, 255, 0.08);
+	transition: 0.3s;
+}
+
+/* Round corners for first and last cells */
+.token-sale-table tr:first-child th:first-child {
+	border-top-left-radius: 12px;
+}
+
+.token-sale-table tr:first-child th:last-child {
+	border-top-right-radius: 12px;
+}
+
+.token-sale-table tr:last-child td:first-child {
+	border-bottom-left-radius: 12px;
+}
+
+.token-sale-table tr:last-child td:last-child {
+	border-bottom-right-radius: 12px;
+}
+
+.allocation-card {
+	background: #ffffff;
+	height: 100%;
+	border-radius: 12px;
+	padding: 20px;
+	transition: 0.3s ease;
+	border: 1px solid #e5e5e5;
+}
+
+.allocation-card:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.sale-item {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+}
+
+.sale-item-color span {
+	width: 18px;
+	height: 18px;
+	background-color: #4b4bff;
+	/* default */
+	border-radius: 4px;
+	display: block;
+}
+
+.color-green span {
+	background-color: #2ecc71;
+}
+
+.sale-item-cont strong {
+	font-size: 24px;
+	font-weight: 700;
+	display: block;
+}
+
+.sale-item-cont small {
+	font-size: 18px;
+	color: #555;
+}
+
 .device-btn a:hover {
 	color: #D3AB2A;
 	border-color: #D3AB2A;
