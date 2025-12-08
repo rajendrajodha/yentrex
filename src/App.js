@@ -9,6 +9,9 @@ import { init, useConnectWallet,Web3OnboardProvider } from '@web3-onboard/react'
 import injectedModule, { ProviderLabel }  from '@web3-onboard/injected-wallets'
 import walletConnectModule from '@web3-onboard/walletconnect'
 import bitgetWalletModule from '@web3-onboard/bitget'
+import { WagmiProvider } from 'wagmi'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { config } from './config/wagmi'
 
 
 const injected = injectedModule({
@@ -51,19 +54,23 @@ const web3Onboard = init({
 })
 
 
+const queryClient = new QueryClient()
+
 const App = () => {
   return (
 
     <ProfileProvider>
-
-      <Router>
-      <Web3OnboardProvider web3Onboard={web3Onboard}>
-        <Routing />
-      </Web3OnboardProvider>
-      </Router>
-      <Loading ref={ref => LoaderHelper.setLoader(ref)} />
-      <ToastContainer />
-
+      <WagmiProvider config={config}>
+        <QueryClientProvider client={queryClient}>
+          <Router>
+            <Web3OnboardProvider web3Onboard={web3Onboard}>
+              <Routing />
+            </Web3OnboardProvider>
+          </Router>
+          <Loading ref={ref => LoaderHelper.setLoader(ref)} />
+          <ToastContainer />
+        </QueryClientProvider>
+      </WagmiProvider>
     </ProfileProvider>
   )
 }

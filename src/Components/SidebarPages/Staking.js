@@ -2,12 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ethers } from "ethers";
 import { useConnectWallet } from '@web3-onboard/react'
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import contractData from './contract.json'
 import bnbPrice from './bnbPrice.json'
 import tokenData from './token.json'
 
 const Staking = () => {
     const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
+    // Wagmi hooks for wallet connection
+    const { address: wagmiAddress, isConnected: isWagmiConnected } = useAccount()
+    const { connectors, connect: wagmiConnect, isPending: isWagmiConnecting } = useConnect()
+    const { disconnect: wagmiDisconnect } = useDisconnect()
     const [stakingOneStatus, setStakingOneStatus] = useState("Inactive")
     const [stakingTwoStatus, setStakingTwoStatus] = useState("Inactive")
     const [stakingThreeStatus, setStakingThreeStatus] = useState("Inactive")
@@ -304,9 +309,36 @@ const Staking = () => {
                             <div className="col-12 col-md-8 text-center ">
                                 <h1 className="text-white pb-3"> Yentrex APY FIXED DEPOSIT </h1>
                                 <p>Our Efforts, Your Rewards!</p>
-                                <button className="crp-btn text-white mx-auto no-border mt-4" disabled={connecting} onClick={() => (wallet ? disconnect(wallet) : connect())}>
+                                {/* Original Connect Wallet Button (commented out) */}
+                                {/* <button className="crp-btn text-white mx-auto no-border mt-4" disabled={connecting} onClick={() => (wallet ? disconnect(wallet) : connect())}>
                                     {connecting ? 'Connecting' : wallet ? `${connectedAccount}` : 'Connect Wallet'}
-                                </button>
+                                </button> */}
+                                {/* Wagmi Connect Wallet Button */}
+                                <div className="mt-4">
+                                    {isWagmiConnected ? (
+                                        <button 
+                                            className="crp-btn text-white mx-auto no-border" 
+                                            onClick={() => wagmiDisconnect()}
+                                        >
+                                            Disconnect: {wagmiAddress?.slice(0, 6)}...{wagmiAddress?.slice(-4)}
+                                        </button>
+                                    ) : (
+                                        <button 
+                                            className="crp-btn text-white mx-auto no-border" 
+                                            disabled={isWagmiConnecting} 
+                                            onClick={() => {
+                                                // Use injected connector (works with MetaMask and other injected wallets)
+                                                const injectedConnector = connectors.find(c => c.id === 'injected')
+                                                const connector = injectedConnector || connectors[0]
+                                                if (connector) {
+                                                    wagmiConnect({ connector })
+                                                }
+                                            }}
+                                        >
+                                            {isWagmiConnecting ? 'Connecting...' : 'Connect Wallet'}
+                                        </button>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
