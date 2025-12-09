@@ -164,7 +164,7 @@ const LandingPage = () => {
                     {/* <!-- Paragraph --> */}
                     <p class="mb-4 text-center">
                         Y Coin’s token sale is designed to balance early investor access, strategic
-                        staking incentives, and gradual market introduction.<br/> Only a limited portion of
+                        staking incentives, and gradual market introduction.<br /> Only a limited portion of
                         the total lifetime supply is available during the sale, creating scarcity while
                         rewarding long-term holders.
                     </p>
@@ -536,10 +536,10 @@ const LandingPage = () => {
                                         <div class="road-map-event event wow bounceInLeft"
                                             data-wow-delay=".5s">
                                             <div class="content">
-                                                <h3>January 10, 2025</h3>
+                                                <h3>December 15, 2025(Saturday)</h3>
                                                 <div class="timeline-cont-info">
-                                                    <h5>Idea Generation</h5>
-                                                    <p>Brainstorm and refine innovative cryptocurrency concepts to solve real market problems.</p>
+                                                    <h5>ICO First Round</h5>
+                                                    <p>For 1 month and rate 5$</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -548,10 +548,10 @@ const LandingPage = () => {
                                         <div class="road-map-event event "
                                             data-wow-delay=".5s">
                                             <div class="content">
-                                                <h3>February 15, 2025</h3>
+                                                <h3>January 11, 2026</h3>
                                                 <div class="timeline-cont-info">
-                                                    <h5>Market Research</h5>
-                                                    <p>Analyze trends, competitors, and user needs to validate the project’s potential.</p>
+                                                    <h5>YentrEX Exchange Launching</h5>
+                                                    <p>For Stacking and Trading</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -560,10 +560,11 @@ const LandingPage = () => {
                                         <div class="road-map-event event wow bounceInLeft"
                                             data-wow-delay=".5s">
                                             <div class="content">
-                                                <h3>March 25, 2025</h3>
+                                                <h3>February 14, 2026</h3>
                                                 <div class="timeline-cont-info">
-                                                    <h5>Business Plan</h5>
-                                                    <p>Create a clear roadmap with goals, strategies, and monetization models for success.</p>
+                                                    <h5>ICO Second Round</h5>
+                                                    <p>For 1 month and rate 7$<br />
+                                                        With Stacking and Trading with Flexi Mobile application.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -572,10 +573,10 @@ const LandingPage = () => {
                                         <div class="road-map-event event "
                                             data-wow-delay=".5s">
                                             <div class="content">
-                                                <h3>April 05, 2025</h3>
+                                                <h3>April 20, 2026</h3>
                                                 <div class="timeline-cont-info">
-                                                    <h5>Start Development</h5>
-                                                    <p>Begin building the platform with secure, scalable, and feature-rich technology.</p>
+                                                    {/* <h5>Start Development</h5> */}
+                                                    <p>E-Commerce WebSite Lunching with best Earning project and Y-Coin Utility.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -584,10 +585,11 @@ const LandingPage = () => {
                                         <div class="road-map-event event wow bounceInLeft"
                                             data-wow-delay=".5s">
                                             <div class="content">
-                                                <h3>May 20, 2025</h3>
+                                                <h3>June 14, 2026</h3>
                                                 <div class="timeline-cont-info">
-                                                    <h5>Pre Sale Launch</h5>
-                                                    <p>Offer early access to investors and supporters to fund and promote the project.</p>
+                                                    <h5>ICO Third Round</h5>
+                                                    <p>For 45 Days and rate 10$<br />
+                                                        With Stacking, Trading, E-Commerce WebSite and Y-Coin Utility.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -596,10 +598,10 @@ const LandingPage = () => {
                                         <div class="road-map-event event "
                                             data-wow-delay=".5s">
                                             <div class="content">
-                                                <h3>June 15, 2025</h3>
+                                                <h3>September 15, 2026</h3>
                                                 <div class="timeline-cont-info">
-                                                    <h5>Launch The Platform</h5>
-                                                    <p>Go live with the fully functional platform, delivering value to users worldwide.</p>
+                                                    {/* <h5>Launch The Platform</h5> */}
+                                                    <p>E-Commerce Product Selling Project (PSP) Lunching for Public Utility Standard Flexi Computer and Mobile Application.</p>
                                                 </div>
                                             </div>
                                         </div>

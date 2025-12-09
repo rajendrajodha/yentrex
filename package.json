@@ -16,6 +16,8 @@
     "@web3-onboard/react": "^2.11.0",
     "@web3-onboard/transaction-preview": "^2.1.2",
     "@web3-onboard/walletconnect": "^2.6.2",
+    "ajv": "^8.17.1",
+    "ajv-keywords": "^5.1.0",
     "apexcharts": "^4.4.0",
     "axios": "^1.7.9",
     "copy-to-clipboard": "^3.3.3",
