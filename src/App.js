@@ -5,8 +5,8 @@ import { ToastContainer } from 'react-toastify';
 import Loading from './Components/CustomComponent/Loading';
 import LoaderHelper from './Components/CustomComponent/LoaderHelper';
 import { ProfileProvider } from './Components/CustomComponent/ContextProviders/ProfileContext';
-import { init, useConnectWallet,Web3OnboardProvider } from '@web3-onboard/react'
-import injectedModule, { ProviderLabel }  from '@web3-onboard/injected-wallets'
+import { init, useConnectWallet, Web3OnboardProvider } from '@web3-onboard/react'
+import injectedModule, { ProviderLabel } from '@web3-onboard/injected-wallets'
 import walletConnectModule from '@web3-onboard/walletconnect'
 import bitgetWalletModule from '@web3-onboard/bitget'
 import { WagmiProvider } from 'wagmi'
@@ -14,10 +14,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { config } from './config/wagmi'
 
 
+
 const injected = injectedModule({
   displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Trust],
   filter: {
-    [ProviderLabel.Detected]: ['Android', 'desktop','macOS','iOS','Android Browser']
+    [ProviderLabel.Detected]: ['Android', 'desktop', 'macOS', 'iOS', 'Android Browser']
   }
 })
 
