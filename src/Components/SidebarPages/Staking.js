@@ -316,22 +316,31 @@ const Staking = () => {
                                 {/* Wagmi Connect Wallet Button */}
                                 <div className="mt-4">
                                     {isWagmiConnected ? (
-                                        <button 
-                                            className="crp-btn text-white mx-auto no-border" 
+                                        <button
+                                            className="crp-btn text-white mx-auto no-border"
                                             onClick={() => wagmiDisconnect()}
                                         >
                                             Disconnect: {wagmiAddress?.slice(0, 6)}...{wagmiAddress?.slice(-4)}
                                         </button>
                                     ) : (
-                                        <button 
-                                            className="crp-btn text-white mx-auto no-border" 
-                                            disabled={isWagmiConnecting} 
+                                        <button
+                                            className="crp-btn text-white mx-auto no-border"
+                                            disabled={isWagmiConnecting}
                                             onClick={() => {
-                                                // Use injected connector (works with MetaMask and other injected wallets)
-                                                const injectedConnector = connectors.find(c => c.id === 'injected')
-                                                const connector = injectedConnector || connectors[0]
+
+                                                // 🔍 Check if MetaMask or any injected wallet exists
+                                                if (typeof window.ethereum === "undefined") {
+                                                    alert("No wallet detected! Please install MetaMask extension.");
+                                                    // OR custom alert function → alertWarningMessage("Please install MetaMask.")
+                                                    return;
+                                                }
+
+                                                // Use injected connector (works with MetaMask, Brave, etc.)
+                                                const injectedConnector = connectors.find(c => c.id === 'injected');
+                                                const connector = injectedConnector || connectors[0];
+
                                                 if (connector) {
-                                                    wagmiConnect({ connector })
+                                                    wagmiConnect({ connector });
                                                 }
                                             }}
                                         >
@@ -339,6 +348,7 @@ const Staking = () => {
                                         </button>
                                     )}
                                 </div>
+
                             </div>
                         </div>
                     </div>
