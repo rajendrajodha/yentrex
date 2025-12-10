@@ -884,11 +884,11 @@ const Staking = () => {
 
 
                             <div className="d-flex flex-column flex-md-row gap-3 justify-content-end mb-3 mt-5">
-                                <button
+                                {/* <button
                                     className="btn btn-dark"
                                 >
                                     Proceed
-                                </button>
+                                </button> */}
                                 <button
                                     className="btn btn-dark"
                                     onClick={() => {
