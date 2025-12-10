@@ -48,6 +48,11 @@ const Staking = () => {
     const [withdrwalFeeTwo, setwithdrwalFeeTwo] = useState(0)
     const [withdrwalFeeThree, setwithdrwalFeeThree] = useState(0)
 
+    const [showBuyModal, setShowBuyModal] = useState(false);
+    const [ycnValue, setYcnValue] = useState("");
+    const YCN_RATE = 5;
+
+
 
 
     const contractAddress = contractData.address;
@@ -290,7 +295,20 @@ const Staking = () => {
                                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                     <li className="nav-item"> <Link className="nav-link " to="/">Home</Link> </li>
                                     <li className="nav-item"><a className="nav-link" href="#"> Telegram Group </a></li>
-                                    <li className="nav-item"><a className="nav-link" href=""> Buy YCN </a></li>
+                                    {/* <li className="nav-item"><a className="nav-link" href=""> Buy YCN </a></li> */}
+                                    <li className="nav-item">
+                                        <a
+                                            className="nav-link"
+                                            href="#"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                setShowBuyModal(true);
+                                            }}
+                                        >
+                                            Buy YCN
+                                        </a>
+                                    </li>
+
                                     <li className="nav-item"><a className="nav-link" href="#"> Dex Tools </a></li>
                                     <li className="nav-item"><a className="nav-link"
                                         href='https://testnet.bscscan.com/address/0x981E00719db2F6936938d78BBce7e34DE5880C20'
@@ -646,6 +664,57 @@ const Staking = () => {
                         </div>
                     </div>
                 </div>
+
+                {showBuyModal && (
+                    <div className="modal-overlay">
+                        <div className="custom-modal">
+
+                            <h4 className="my-3 text-dark text-center">Buy YCN</h4>
+
+                            <label className="text-dark mt-2 mb-2">YCN Token:</label>
+                            <input
+                                type="text"
+                                className="form-control mb-4"
+                                placeholder="Quantity"
+                                value={ycnValue}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+
+                                    // Allow only numbers (optional)
+                                    if (!/^\d*\.?\d*$/.test(value)) return;
+
+                                    setYcnValue(value);
+                                }}
+                            />
+
+                            {ycnValue === "" ? (
+                                <p className="text-success fw-bold">1 YCN = 5 USDT</p>
+                            ) : (
+                                <p className="text-success fw-bold">
+                                    {ycnValue} YCN = {(ycnValue * YCN_RATE).toFixed(2)} USDT
+                                </p>
+                            )}
+
+
+                            <div className="d-flex gap-3 justify-content-end mb-3 mt-5">
+                                <button
+                                    className="btn btn-dark"
+                                    onClick={() => setShowBuyModal(false)}
+                                >
+                                    Cancel
+                                </button>
+
+                                <button
+                                    className="btn btn-dark"
+                                >
+                                    Proceed
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                )}
+
 
                 <footer className="footer-container pt-50">
                     <div className="container">
