@@ -52,12 +52,12 @@ const Staking = () => {
     const [showBuyModal, setShowBuyModal] = useState(false);
     const [ycnValue, setYcnValue] = useState("");
     const YCN_RATE = 5;
-    
+
     // USDT address on BSC mainnet
     const USDT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955";
     // Buy contract address - update this with your actual buy contract address
     const BUY_CONTRACT_ADDRESS = "0x68208A272BacACAbD3f1D6675dC53784A55A12e9"; // Using staking contract address, update if different
-    
+
     // Wagmi hooks for contract interactions
     const { writeContract: writeContractApprove, data: approveHash, isPending: isApprovingUSDT } = useWriteContract();
     const { writeContract: writeContractBuy, data: buyHash, isPending: isBuying } = useWriteContract();
@@ -67,7 +67,7 @@ const Staking = () => {
     const { isLoading: isWaitingBuy, isSuccess: isBuySuccess } = useWaitForTransactionReceipt({
         hash: buyHash,
     });
-    
+
     // USDT ABI for approve function
     const USDT_ABI = [
         {
@@ -91,7 +91,7 @@ const Staking = () => {
             "type": "function"
         }
     ];
-    
+
     // Buy contract ABI
     const BUY_CONTRACT_ABI = [
         {
@@ -105,7 +105,7 @@ const Staking = () => {
             "type": "function"
         }
     ];
-    
+
     // Check current allowance
     const { data: allowance } = useReadContract({
         address: USDT_ADDRESS,
@@ -122,29 +122,29 @@ const Staking = () => {
 
     const contractAddress = contractData.address;
     const contractAbi = contractData.abi;
-    
+
     // Handle buy YCN function
     const handleBuyYCN = async () => {
         if (!isWagmiConnected || !wagmiAddress) {
             alert("Please connect your wallet first");
             return;
         }
-        
+
         if (!ycnValue || parseFloat(ycnValue) <= 0) {
             alert("Please enter a valid YCN amount");
             return;
         }
-        
+
         try {
             // Calculate USDT amount (YCN amount * rate)
             const usdtAmount = parseFloat(ycnValue) * YCN_RATE;
             // USDT has 18 decimals on BSC
             const usdtAmountWei = parseUnits(usdtAmount.toString(), 18);
-            
+
             // Check if we need to approve
             const currentAllowance = allowance || 0n;
             const needsApproval = currentAllowance < usdtAmountWei;
-            
+
             if (needsApproval) {
                 // First, approve USDT spending
                 writeContractApprove({
@@ -167,7 +167,7 @@ const Staking = () => {
             alert("Transaction failed: " + (error.message || "Unknown error"));
         }
     };
-    
+
     // Handle approve success - automatically proceed to buy
     useEffect(() => {
         if (isApproveSuccess && ycnValue && writeContractBuy) {
@@ -186,7 +186,7 @@ const Staking = () => {
             }
         }
     }, [isApproveSuccess, ycnValue, writeContractBuy]);
-    
+
     // Handle buy success
     useEffect(() => {
         if (isBuySuccess && ycnValue) {
@@ -469,7 +469,7 @@ const Staking = () => {
                                     {connecting ? 'Connecting' : wallet ? `${connectedAccount}` : 'Connect Wallet'}
                                 </button> */}
                                 {/* Wagmi Connect Wallet Button */}
-                                <div className="mt-4">
+                                <div className="mt-4 d-flex justify-content-center gap-2 flex-column">
                                     {isWagmiConnected ? (
                                         <button
                                             className="crp-btn text-white mx-auto no-border"
@@ -481,29 +481,79 @@ const Staking = () => {
                                         <button
                                             className="crp-btn text-white mx-auto no-border"
                                             disabled={isWagmiConnecting}
-                                            onClick={() => {
+                                            // onClick={() => {
 
-                                                // 🔍 Check if MetaMask or any injected wallet exists
-                                                if (typeof window.ethereum === "undefined") {
-                                                    alert("No wallet detected! Please install MetaMask extension.");
-                                                    // OR custom alert function → alertWarningMessage("Please install MetaMask.")
-                                                    return;
-                                                }
 
-                                                // Use injected connector (works with MetaMask, Brave, etc.)
-                                                const injectedConnector = connectors.find(c => c.id === 'injected');
-                                                const connector = injectedConnector || connectors[0];
+                                            //     if (typeof window.ethereum === "undefined") {
+                                            //         alert("No wallet detected! Please install MetaMask extension.");
+                                            //         // OR custom alert function → alertWarningMessage("Please install MetaMask.")
+                                            //         return;
+                                            //     }
 
-                                                if (connector) {
-                                                    wagmiConnect({ connector });
+
+                                            //     const injectedConnector = connectors.find(c => c.id === 'injected');
+                                            //     const connector = injectedConnector || connectors[0];
+
+                                            //     if (connector) {
+                                            //         wagmiConnect({ connector });
+                                            //     }
+                                            // }}
+                                            onClick={async () => {
+                                                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                                                const injectedConnector = connectors.find(c => c.id === "injected");
+                                                const walletConnectConnector = connectors.find(c => c.id === "walletConnect");
+
+                                                try {
+                                                    // ✅ Desktop / injected wallet
+                                                    if (!isMobile && injectedConnector) {
+                                                        if (typeof window.ethereum === "undefined") {
+                                                            alert("No wallet detected! Please install MetaMask.");
+                                                            return;
+                                                        }
+                                                        await wagmiConnect({ connector: injectedConnector });
+                                                        return;
+                                                    }
+
+                                                    // ✅ Mobile deep link
+                                                    if (isMobile) {
+                                                        const dappUrl = window.location.href; // your site URL
+                                                        const metamaskDeepLink = `https://metamask.app.link/dapp/${dappUrl.replace(/^https?:\/\//, '')}`;
+
+                                                        window.location.href = metamaskDeepLink;
+
+                                                        // Fallback if app not installed
+                                                        setTimeout(() => {
+                                                            alert("MetaMask app not found! Please install MetaMask to continue.");
+                                                        }, 1500);
+
+                                                        return;
+                                                    }
+
+                                                    // ❌ Fallback for desktop without MetaMask
+                                                    alert("No wallet detected! Please install MetaMask.");
+                                                } catch (error) {
+                                                    console.error("Wallet connection failed:", error);
+                                                    alert("Failed to connect wallet. Please try again.");
                                                 }
                                             }}
+
+
                                         >
                                             {isWagmiConnecting ? 'Connecting...' : 'Connect Wallet'}
                                         </button>
                                     )}
-                                </div>
 
+                                    <a
+                                        className="crp-btn text-white mx-auto no-border"
+                                        href="#"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setShowBuyModal(true);
+                                        }}
+                                    >
+                                        Buy YCN
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -833,7 +883,12 @@ const Staking = () => {
                             )}
 
 
-                            <div className="d-flex gap-3 justify-content-end mb-3 mt-5">
+                            <div className="d-flex flex-column flex-md-row gap-3 justify-content-end mb-3 mt-5">
+                                <button
+                                    className="btn btn-dark"
+                                >
+                                    Proceed
+                                </button>
                                 <button
                                     className="btn btn-dark"
                                     onClick={() => {
@@ -849,19 +904,19 @@ const Staking = () => {
                                     className="btn btn-dark"
                                     onClick={handleBuyYCN}
                                     disabled={
-                                        !isWagmiConnected || 
-                                        !ycnValue || 
+                                        !isWagmiConnected ||
+                                        !ycnValue ||
                                         parseFloat(ycnValue) <= 0 ||
-                                        isApprovingUSDT || 
-                                        isWaitingApprove || 
-                                        isBuying || 
+                                        isApprovingUSDT ||
+                                        isWaitingApprove ||
+                                        isBuying ||
                                         isWaitingBuy
                                     }
                                 >
-                                    {isApprovingUSDT || isWaitingApprove 
-                                        ? 'Approving...' 
-                                        : isBuying || isWaitingBuy 
-                                            ? 'Buying...' 
+                                    {isApprovingUSDT || isWaitingApprove
+                                        ? 'Approving...'
+                                        : isBuying || isWaitingBuy
+                                            ? 'Buying...'
                                             : 'Proceed'}
                                 </button>
                             </div>
