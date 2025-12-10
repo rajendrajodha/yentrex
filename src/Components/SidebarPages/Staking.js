@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ethers } from "ethers";
 import { useConnectWallet } from '@web3-onboard/react'
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { useAccount, useConnect, useDisconnect, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'
+import { parseUnits, formatUnits } from 'viem'
 import contractData from './contract.json'
 import bnbPrice from './bnbPrice.json'
 import tokenData from './token.json'
@@ -51,13 +52,149 @@ const Staking = () => {
     const [showBuyModal, setShowBuyModal] = useState(false);
     const [ycnValue, setYcnValue] = useState("");
     const YCN_RATE = 5;
+    
+    // USDT address on BSC mainnet
+    const USDT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955";
+    // Buy contract address - update this with your actual buy contract address
+    const BUY_CONTRACT_ADDRESS = "0x68208A272BacACAbD3f1D6675dC53784A55A12e9"; // Using staking contract address, update if different
+    
+    // Wagmi hooks for contract interactions
+    const { writeContract: writeContractApprove, data: approveHash, isPending: isApprovingUSDT } = useWriteContract();
+    const { writeContract: writeContractBuy, data: buyHash, isPending: isBuying } = useWriteContract();
+    const { isLoading: isWaitingApprove, isSuccess: isApproveSuccess } = useWaitForTransactionReceipt({
+        hash: approveHash,
+    });
+    const { isLoading: isWaitingBuy, isSuccess: isBuySuccess } = useWaitForTransactionReceipt({
+        hash: buyHash,
+    });
+    
+    // USDT ABI for approve function
+    const USDT_ABI = [
+        {
+            "constant": false,
+            "inputs": [
+                { "name": "_spender", "type": "address" },
+                { "name": "_value", "type": "uint256" }
+            ],
+            "name": "approve",
+            "outputs": [{ "name": "", "type": "bool" }],
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                { "name": "_owner", "type": "address" },
+                { "name": "_spender", "type": "address" }
+            ],
+            "name": "allowance",
+            "outputs": [{ "name": "", "type": "uint256" }],
+            "type": "function"
+        }
+    ];
+    
+    // Buy contract ABI
+    const BUY_CONTRACT_ABI = [
+        {
+            "inputs": [
+                { "internalType": "address", "name": "stablecoin", "type": "address" },
+                { "internalType": "uint256", "name": "stablecoinAmount", "type": "uint256" }
+            ],
+            "name": "buyTokens",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        }
+    ];
+    
+    // Check current allowance
+    const { data: allowance } = useReadContract({
+        address: USDT_ADDRESS,
+        abi: USDT_ABI,
+        functionName: 'allowance',
+        args: wagmiAddress ? [wagmiAddress, BUY_CONTRACT_ADDRESS] : undefined,
+        query: {
+            enabled: !!wagmiAddress && isWagmiConnected,
+        },
+    });
 
 
 
 
     const contractAddress = contractData.address;
     const contractAbi = contractData.abi;
-
+    
+    // Handle buy YCN function
+    const handleBuyYCN = async () => {
+        if (!isWagmiConnected || !wagmiAddress) {
+            alert("Please connect your wallet first");
+            return;
+        }
+        
+        if (!ycnValue || parseFloat(ycnValue) <= 0) {
+            alert("Please enter a valid YCN amount");
+            return;
+        }
+        
+        try {
+            // Calculate USDT amount (YCN amount * rate)
+            const usdtAmount = parseFloat(ycnValue) * YCN_RATE;
+            // USDT has 18 decimals on BSC
+            const usdtAmountWei = parseUnits(usdtAmount.toString(), 18);
+            
+            // Check if we need to approve
+            const currentAllowance = allowance || 0n;
+            const needsApproval = currentAllowance < usdtAmountWei;
+            
+            if (needsApproval) {
+                // First, approve USDT spending
+                writeContractApprove({
+                    address: USDT_ADDRESS,
+                    abi: USDT_ABI,
+                    functionName: 'approve',
+                    args: [BUY_CONTRACT_ADDRESS, usdtAmountWei],
+                });
+            } else {
+                // Already approved, proceed to buy
+                writeContractBuy({
+                    address: BUY_CONTRACT_ADDRESS,
+                    abi: BUY_CONTRACT_ABI,
+                    functionName: 'buyTokens',
+                    args: [USDT_ADDRESS, usdtAmountWei],
+                });
+            }
+        } catch (error) {
+            console.error("Error in handleBuyYCN:", error);
+            alert("Transaction failed: " + (error.message || "Unknown error"));
+        }
+    };
+    
+    // Handle approve success - automatically proceed to buy
+    useEffect(() => {
+        if (isApproveSuccess && ycnValue && writeContractBuy) {
+            const usdtAmount = parseFloat(ycnValue) * YCN_RATE;
+            const usdtAmountWei = parseUnits(usdtAmount.toString(), 18);
+            try {
+                writeContractBuy({
+                    address: BUY_CONTRACT_ADDRESS,
+                    abi: BUY_CONTRACT_ABI,
+                    functionName: 'buyTokens',
+                    args: [USDT_ADDRESS, usdtAmountWei],
+                });
+            } catch (error) {
+                console.error("Error buying tokens:", error);
+                alert("Failed to buy tokens: " + (error.message || "Unknown error"));
+            }
+        }
+    }, [isApproveSuccess, ycnValue, writeContractBuy]);
+    
+    // Handle buy success
+    useEffect(() => {
+        if (isBuySuccess && ycnValue) {
+            alert(`Successfully purchased ${ycnValue} YCN tokens!`);
+            setShowBuyModal(false);
+            setYcnValue("");
+        }
+    }, [isBuySuccess, ycnValue]);
 
     useEffect(() => {
         const fetchPlans = async () => {
@@ -699,15 +836,33 @@ const Staking = () => {
                             <div className="d-flex gap-3 justify-content-end mb-3 mt-5">
                                 <button
                                     className="btn btn-dark"
-                                    onClick={() => setShowBuyModal(false)}
+                                    onClick={() => {
+                                        setShowBuyModal(false);
+                                        setYcnValue("");
+                                    }}
+                                    disabled={isApprovingUSDT || isWaitingApprove || isBuying || isWaitingBuy}
                                 >
                                     Cancel
                                 </button>
 
                                 <button
                                     className="btn btn-dark"
+                                    onClick={handleBuyYCN}
+                                    disabled={
+                                        !isWagmiConnected || 
+                                        !ycnValue || 
+                                        parseFloat(ycnValue) <= 0 ||
+                                        isApprovingUSDT || 
+                                        isWaitingApprove || 
+                                        isBuying || 
+                                        isWaitingBuy
+                                    }
                                 >
-                                    Proceed
+                                    {isApprovingUSDT || isWaitingApprove 
+                                        ? 'Approving...' 
+                                        : isBuying || isWaitingBuy 
+                                            ? 'Buying...' 
+                                            : 'Proceed'}
                                 </button>
                             </div>
 
