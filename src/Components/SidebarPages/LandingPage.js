@@ -51,7 +51,7 @@ const LandingPage = () => {
                                     <h1 class="text-white">Powering the Digital Economy with Y-Coin</h1>
                                     <p class="text-white">A secure, user-friendly platform for seamless cryptocurrency trading.
                                     </p>
-                                    <a class="crp-btn text-white px-5" href="#"> Get Started </a>
+                                    <Link class="crp-btn text-white px-5" to="/staking"> Get Started </Link>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
@@ -193,15 +193,15 @@ const LandingPage = () => {
                                 </tr>
                                 <tr>
                                     <td>Phase 2 – Main Sale</td>
-                                    <td>60 Days</td>
-                                    <td>10%</td>
+                                    <td>30 Days</td>
+                                    <td>5%</td>
                                     <td>$7</td>
                                     <td>6 Months</td>
                                     <td>Public round; pre-registration required; staking blocks applied</td>
                                 </tr>
                                 <tr>
                                     <td>Phase 3 – Final Round</td>
-                                    <td>30 Days</td>
+                                    <td>45 Days</td>
                                     <td>10%</td>
                                     <td>$10</td>
                                     <td>No Lock-In</td>
@@ -536,7 +536,7 @@ const LandingPage = () => {
                                         <div class="road-map-event event wow bounceInLeft"
                                             data-wow-delay=".5s">
                                             <div class="content">
-                                                <h3>December 15, 2025(Saturday)</h3>
+                                                <h3>December 14, 2025</h3>
                                                 <div class="timeline-cont-info">
                                                     <h5>ICO First Round</h5>
                                                     <p>For 1 month and rate 5$</p>
