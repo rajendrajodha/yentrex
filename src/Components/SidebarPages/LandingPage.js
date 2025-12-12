@@ -275,10 +275,26 @@ const LandingPage = () => {
                                             <span></span>
                                         </div>
                                         <div class="sale-item-cont">
-                                            <strong>30%</strong>
+                                            <strong>20%</strong>
                                             <small>Public Sale & Prelaunch</small>
                                             <small>Immediate availability
                                                 for early investors.
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="allocation-card p-3 shadow-sm">
+                                    <div class="sale-item">
+                                        <div class="sale-item-color color-green">
+                                            <span></span>
+                                        </div>
+                                        <div class="sale-item-cont">
+                                            <strong>10%</strong>
+                                            <small>Reserved Allocation</small>
+                                            <small>This portion is reserved .
                                             </small>
                                         </div>
                                     </div>
