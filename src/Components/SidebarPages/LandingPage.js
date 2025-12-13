@@ -1,8 +1,56 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import WOW from "wowjs";
 
 const LandingPage = () => {
+    const icoStartDate = new Date("December 14, 2025 00:00:00").getTime();
+    const icoEndDate = new Date("January 13, 2026 23:59:59").getTime();
+    const [timeLeft, setTimeLeft] = useState({
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+    });
+
+    const [icoStatus, setIcoStatus] = useState("PRE_LIVE");
+
+
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = icoStartDate - now;
+
+            // ✅ ICO has started
+            if (distance <= 0) {
+                clearInterval(timer);
+                setTimeLeft({
+                    days: 0,
+                    hours: 0,
+                    minutes: 0,
+                    seconds: 0,
+                });
+                setIcoStatus("LIVE");
+                return;
+            }
+
+            // ⏳ Pre-start countdown
+            setTimeLeft({
+                days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+                hours: Math.floor((distance / (1000 * 60 * 60)) % 24),
+                minutes: Math.floor((distance / (1000 * 60)) % 60),
+                seconds: Math.floor((distance / 1000) % 60),
+            });
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, []);
+
+
+
+
+
+
 
     useEffect(() => {
         new WOW.WOW().init();
@@ -44,6 +92,55 @@ const LandingPage = () => {
                 {/* <!-- hero sec --> */}
                 <div id="home" class="banner-container">
                     <div class="container">
+                        <div className="ico-timer text-white mt-1 w-50 d-flex justify-content-center flex-column align-items-center p-2 rounded mx-auto">
+
+                            {/* Status Badge */}
+                            <div className="ico-badge live">
+                                {icoStatus === "PRE_LIVE" && "ICO ROUND 1 STARTS IN"}
+                                {icoStatus === "LIVE" && "ICO ROUND 1 IS LIVE"}
+                                {icoStatus === "ENDED" && "ICO ROUND 1 ENDED"}
+                            </div>
+
+                            {/* PRE-LIVE countdown */}
+                            {icoStatus === "PRE_LIVE" && (
+                                <>
+                                    <div className="d-flex gap-3 mt-3">
+                                        <div><strong>{timeLeft.days}</strong> Days</div>
+                                        <div><strong>{timeLeft.hours}</strong> Hrs</div>
+                                        <div><strong>{timeLeft.minutes}</strong> Min</div>
+                                        <div><strong>{timeLeft.seconds}</strong> Sec</div>
+                                    </div>
+                                    <p className="d-block my-4 text-white">
+                                        Ends on <span>13th January 2026</span>
+                                    </p>
+                                </>
+
+                            )}
+
+                            {/* LIVE state */}
+                            {icoStatus === "LIVE" && (
+                                <>
+                                    <div className="d-flex gap-3 mt-3">
+                                        <div><strong>0</strong> Days</div>
+                                        <div><strong>0</strong> Hrs</div>
+                                        <div><strong>0</strong> Min</div>
+                                        <div><strong>0</strong> Sec</div>
+                                    </div>
+
+                                    <small className="d-block my-4">
+                                        Ends on <strong>13th January 2026</strong>
+                                    </small>
+                                </>
+                            )}
+
+                            {/* ENDED */}
+                            {icoStatus === "ENDED" && (
+                                <h6 className="mt-3 text-danger">ICO Round 1 has ended</h6>
+                            )}
+
+                        </div>
+
+
                         <div class="row banner-content-area justify-content-between">
                             <div class="col-12 col-md-6 col-lg-6 banner-content">
                                 <div class="banner-cont-info text-white "
@@ -566,7 +663,7 @@ const LandingPage = () => {
                                             <div class="content">
                                                 <h3>January 11, 2026</h3>
                                                 <div class="timeline-cont-info">
-                                                    <h5>YentrEX Exchange Launching</h5>
+                                                    <h5>Yentrex Exchange Launching</h5>
                                                     <p>For Stacking and Trading</p>
                                                 </div>
                                             </div>
