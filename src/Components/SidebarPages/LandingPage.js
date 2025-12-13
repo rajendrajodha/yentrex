@@ -92,53 +92,33 @@ const LandingPage = () => {
                 {/* <!-- hero sec --> */}
                 <div id="home" class="banner-container">
                     <div class="container">
-                        <div className="ico-timer text-white mt-1 w-50 d-flex justify-content-center flex-column align-items-center p-2 rounded mx-auto">
-
-                            {/* Status Badge */}
-                            <div className="ico-badge live">
+                        <div className="ico-timer">
+                            <div className="ico-badge">
                                 {icoStatus === "PRE_LIVE" && "ICO ROUND 1 STARTS IN"}
                                 {icoStatus === "LIVE" && "ICO ROUND 1 IS LIVE"}
                                 {icoStatus === "ENDED" && "ICO ROUND 1 ENDED"}
                             </div>
 
-                            {/* PRE-LIVE countdown */}
-                            {icoStatus === "PRE_LIVE" && (
-                                <>
-                                    <div className="d-flex gap-3 mt-3">
-                                        <div><strong>{timeLeft.days}</strong> Days</div>
-                                        <div><strong>{timeLeft.hours}</strong> Hrs</div>
-                                        <div><strong>{timeLeft.minutes}</strong> Min</div>
-                                        <div><strong>{timeLeft.seconds}</strong> Sec</div>
-                                    </div>
-                                    <p className="d-block my-4 text-white">
-                                        Ends on <span>13th January 2026</span>
-                                    </p>
-                                </>
-
+                            {(icoStatus === "PRE_LIVE" || icoStatus === "LIVE") && (
+                                <div className="d-flex mt-3">
+                                    <div><strong>{timeLeft.days}</strong> Days</div>
+                                    <div><strong>{timeLeft.hours}</strong> Hrs</div>
+                                    <div><strong>{timeLeft.minutes}</strong> Min</div>
+                                    <div><strong>{timeLeft.seconds}</strong> Sec</div>
+                                </div>
                             )}
 
-                            {/* LIVE state */}
-                            {icoStatus === "LIVE" && (
-                                <>
-                                    <div className="d-flex gap-3 mt-3">
-                                        <div><strong>0</strong> Days</div>
-                                        <div><strong>0</strong> Hrs</div>
-                                        <div><strong>0</strong> Min</div>
-                                        <div><strong>0</strong> Sec</div>
-                                    </div>
-
-                                    <small className="d-block my-4">
-                                        Ends on <strong>13th January 2026</strong>
-                                    </small>
-                                </>
+                            {(icoStatus === "PRE_LIVE" || icoStatus === "LIVE") && (
+                                <p className="my-4 text-white text-center">
+                                    Ends on <strong>13th January 2026</strong>
+                                </p>
                             )}
 
-                            {/* ENDED */}
                             {icoStatus === "ENDED" && (
-                                <h6 className="mt-3 text-danger">ICO Round 1 has ended</h6>
+                                <h6 className="mt-3 text-danger text-center">ICO Round 1 has ended</h6>
                             )}
-
                         </div>
+
 
 
                         <div class="row banner-content-area justify-content-between">
