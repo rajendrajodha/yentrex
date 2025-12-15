@@ -50,6 +50,7 @@ const Staking = () => {
     const [withdrwalFeeThree, setwithdrwalFeeThree] = useState(0)
 
     const [showBuyModal, setShowBuyModal] = useState(false);
+    const [showWalletModal, setShowWalletModal] = useState(false);
     const [ycnValue, setYcnValue] = useState("");
     const YCN_RATE = 5;
 
@@ -498,44 +499,7 @@ const Staking = () => {
                                             //         wagmiConnect({ connector });
                                             //     }
                                             // }}
-                                            onClick={async () => {
-                                                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-                                                const injectedConnector = connectors.find(c => c.id === "injected");
-                                                const walletConnectConnector = connectors.find(c => c.id === "walletConnect");
-
-                                                try {
-                                                    // ✅ Desktop / injected wallet
-                                                    if (!isMobile && injectedConnector) {
-                                                        if (typeof window.ethereum === "undefined") {
-                                                            alert("No wallet detected! Please install MetaMask.");
-                                                            return;
-                                                        }
-                                                        await wagmiConnect({ connector: injectedConnector });
-                                                        return;
-                                                    }
-
-                                                    // ✅ Mobile deep link
-                                                    if (isMobile) {
-                                                        const dappUrl = window.location.href; // your site URL
-                                                        const metamaskDeepLink = `https://metamask.app.link/dapp/${dappUrl.replace(/^https?:\/\//, '')}`;
-
-                                                        window.location.href = metamaskDeepLink;
-
-                                                        // Fallback if app not installed
-                                                        setTimeout(() => {
-                                                            alert("MetaMask app not found! Please install MetaMask to continue.");
-                                                        }, 1500);
-
-                                                        return;
-                                                    }
-
-                                                    // ❌ Fallback for desktop without MetaMask
-                                                    alert("No wallet detected! Please install MetaMask.");
-                                                } catch (error) {
-                                                    console.error("Wallet connection failed:", error);
-                                                    alert("Failed to connect wallet. Please try again.");
-                                                }
-                                            }}
+                                            onClick={() => setShowWalletModal(true)}
 
 
                                         >
@@ -851,6 +815,58 @@ const Staking = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* Wallet Selection Modal */}
+                {showWalletModal && (
+                    <div className="modal-overlay" onClick={() => setShowWalletModal(false)}>
+                        <div className="custom-modal" onClick={(e) => e.stopPropagation()}>
+                            <h4 className="my-3 text-dark text-center">Connect Wallet</h4>
+                            <p className="text-muted text-center mb-4">Choose a wallet to connect</p>
+                            
+                            <div className="d-flex flex-column gap-3">
+                                {connectors.map((connector) => {
+                                    const isMetaMask = connector.id === 'metaMask' || connector.id === 'injected';
+                                    const isWalletConnect = connector.id === 'walletConnect';
+                                    
+                                    return (
+                                        <button
+                                            key={connector.id}
+                                            className="btn btn-outline-dark d-flex align-items-center justify-content-between p-3"
+                                            onClick={async () => {
+                                                try {
+                                                    await wagmiConnect({ connector });
+                                                    setShowWalletModal(false);
+                                                } catch (error) {
+                                                    console.error("Connection error:", error);
+                                                    alert("Failed to connect. Please try again.");
+                                                }
+                                            }}
+                                            disabled={isWagmiConnecting}
+                                        >
+                                            <div className="d-flex align-items-center gap-3">
+                                                <span className="fw-bold">
+                                                    {isMetaMask ? 'MetaMask' : 
+                                                     isWalletConnect ? 'WalletConnect' : 
+                                                     connector.name || 'Wallet'}
+                                                </span>
+                                            </div>
+                                            {isWagmiConnecting && <span className="spinner-border spinner-border-sm" />}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                            
+                            <div className="d-flex justify-content-end mt-4">
+                                <button
+                                    className="btn btn-dark"
+                                    onClick={() => setShowWalletModal(false)}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {showBuyModal && (
                     <div className="modal-overlay">
